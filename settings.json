@@ -1,0 +1,19 @@
+{ "Locations": {
+    "Work": [
+        "Office1",
+        "office"
+    ],
+    "Automatic": [
+        "defaultwifi",
+        "homewifi"
+    ]
+  },
+  "Points": {
+    "Work": [
+        "smb://username@password@192.168.3.42/data"
+    ],
+    "Automatic": [
+        "afp://username@server._afpovertcp._tcp.local/Videos"
+    ]
+  }
+}
