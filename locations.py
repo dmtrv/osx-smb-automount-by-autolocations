@@ -8,7 +8,8 @@ import time
 import subprocess
 from subprocess import Popen, PIPE
 
-config_file = "settings.json"
+config_file = "settings.json"  # you should change it!
+pause = 5                      # wait while osx is connecting to the hotspot
 
 class Location:
     def __init__(self, config_file):
@@ -24,7 +25,7 @@ class Location:
         try:
             json_data = open(self.config_file)
             data = json.load(json_data)
-        except Exception, e            #logging.critical('Config file has errors, aborting – %s' % e)
+        except Exception, e:
             raise e
         else:
             pass
@@ -133,19 +134,20 @@ class Location:
                                 stderr=subprocess.PIPE,
                                 stdin=subprocess.PIPE).communicate()[0].split('\n')
 
-loc = Location(config_file)
-SSID = loc.get_ssid()
-locations_list = loc.get_locations()
-current_location = loc.get_current_location()
+if __name__ == "__main__":
+    loc = Location(config_file)
+    SSID = loc.get_ssid()
+    locations_list = loc.get_locations()
+    current_location = loc.get_current_location()
 
-if not loc.check_locations(current_location):
-    raise SystemExit(0)
+    if not loc.check_locations(current_location):
+        raise SystemExit(0)
 
-if not loc.check_mount_point(current_location):
-    raise SystemExit(0)
+    if not loc.check_mount_point(current_location):
+        raise SystemExit(0)
 
-need_switch, new_location = loc.need_switch_location(SSID, current_location)
-if need_switch:
-    loc.switch_location(new_location)
-    time.sleep(5)
-    loc.automount(new_location)
+    need_switch, new_location = loc.need_switch_location(SSID, current_location)
+    if need_switch:
+        loc.switch_location(new_location)
+        time.sleep(pause)
+        loc.automount(new_location)
