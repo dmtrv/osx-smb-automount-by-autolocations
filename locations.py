@@ -6,9 +6,7 @@
 import json
 import time
 import subprocess
-import logging
 from subprocess import Popen, PIPE
-
 
 config_file = "settings.json"
 
@@ -26,12 +24,10 @@ class Location:
         try:
             json_data = open(self.config_file)
             data = json.load(json_data)
-        except Exception, e:
-            #logging.critical('Config file has errors, aborting – %s' % e)
+        except Exception, e            #logging.critical('Config file has errors, aborting – %s' % e)
             raise e
         else:
             pass
-            #logging.info('Config – %s' % config_file)
         json_data.close()
         return data
 
